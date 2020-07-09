@@ -1,28 +1,30 @@
-.image:hover {
-  cursor: pointer;
-
-  &:before,
-  &:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
-
-  &:before {
-    content: "selecionar";
-    display: flex;
-    align-items: center;
-    color: white;
-    z-index: 2;
-    justify-content: center;
-  }
-
-  &:after {
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1;
+#first-phase{
+  .image:hover {
+    cursor: pointer;
+  
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  
+    &:before {
+      content: "selecionar";
+      display: flex;
+      align-items: center;
+      color: white;
+      z-index: 2;
+      justify-content: center;
+    }
+  
+    &:after {
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
   }
 }
 

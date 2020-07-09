@@ -1,9 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 
-export const SelectImagePhase = ({
-    handleSelectImage
-} = props) => {
+export const SelectImagePhase = ({ handleSelectImage } = props) => {
   const [term, setTerm] = React.useState("");
   const [loadingImages, setLoadingImages] = React.useState(false);
   const [images, setImages] = React.useState([]);
@@ -25,7 +23,7 @@ export const SelectImagePhase = ({
   };
 
   return (
-    <>
+    <div id="first-phase">
       <form onSubmit={handleImageSearch} className="form">
         <div className="field">
           <label htmlFor="" className="label">
@@ -74,6 +72,6 @@ export const SelectImagePhase = ({
             </div>
           ))}
       </div>
-    </>
+    </div>
   );
 };
