@@ -35,7 +35,7 @@ export default async (req, res) => {
 
     const creditsImage = await sharp(Buffer.from(`<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
     <style>.text{text-transform: uppercase;}</style>
-    <text x="5" y="1910" font-size="28" font-family="sans" class="text">${credits}</text>
+    <text x="5" y="1910" font-size="28" class="text">${credits}</text>
   </svg>`)).toBuffer();
 
     const image = await sharp({
