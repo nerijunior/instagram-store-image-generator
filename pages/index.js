@@ -3,6 +3,7 @@ import Head from "next/head";
 import { SliderPicker, GithubPicker } from "react-color";
 import { ArrowLeftCircle, Download } from "react-feather";
 import classnames from "classnames";
+import dayjs from "dayjs";
 
 import { Preview } from "../components/Preview";
 import { SelectImagePhase } from "../components/SelectImagePhase";
@@ -36,7 +37,7 @@ export default function Home() {
       .then((response) => {
         const downloadLink = document.createElement("a");
         downloadLink.href = `data:application/octet-stream;base64,${response.image}`;
-        downloadLink.download = "teste.png";
+        downloadLink.download = `resposta-instagram-${dayjs().format("YYYY-MM-DD-HH-mm-ss")}.png`;
         downloadLink.click();
         setLoadingDownload(false);
       })
