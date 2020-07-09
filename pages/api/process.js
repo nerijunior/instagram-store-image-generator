@@ -2,7 +2,7 @@ import sharp from "sharp";
 import fetch from "node-fetch";
 
 export default async (req, res) => {
-  const { imageUrl, color } = JSON.parse(req.body);
+  const { imageUrl, color, credits } = JSON.parse(req.body)
 
   try {
     const sourceImage = await fetch(imageUrl).then((res) => res.buffer());
@@ -33,6 +33,11 @@ export default async (req, res) => {
       .composite([{ input: svg }])
       .toBuffer();
 
+    const creditsImage = await sharp(Buffer.from(`<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+    <style>.text{text-transform: uppercase;}</style>
+    <text class="text" x="5" y="1910" font-size="28" font-family="Arial" class="small">${credits}</text>
+  </svg>`)).toBuffer();
+
     const image = await sharp({
       create: {
         width: 1080,
@@ -41,7 +46,10 @@ export default async (req, res) => {
         background: color,
       },
     })
-      .composite([{ input: fadedImage, top: 220, left: 0 }])
+      .composite([
+        { input: fadedImage, top: 220, left: 0 },
+        { input: creditsImage, bottom: 5, right: 5 },
+      ])
       .png()
       .toBuffer();
 

@@ -2,6 +2,7 @@ import React from "react";
 import Head from "next/head";
 import { SliderPicker, GithubPicker } from "react-color";
 import { ArrowLeftCircle, Download } from "react-feather";
+import classnames from "classnames";
 
 import { Preview } from "../components/Preview";
 import { SelectImagePhase } from "../components/SelectImagePhase";
@@ -9,6 +10,7 @@ import { SelectImagePhase } from "../components/SelectImagePhase";
 export default function Home() {
   const [selectedImage, setSelectedImage] = React.useState(null);
   const [selectedColor, setSelectedColor] = React.useState("");
+  const [loadingDownload, setLoadingDownload] = React.useState(false);
 
   const handleSelectImage = (image) => () => {
     setSelectedImage(image);
@@ -20,11 +22,14 @@ export default function Home() {
   };
 
   const handleDownload = () => {
+    setLoadingDownload(true);
+
     fetch("/api/process", {
       method: "POST",
       body: JSON.stringify({
         imageUrl: selectedImage.urls.regular,
         color: selectedColor,
+        credits: `Foto de ${selectedImage.user.name} no Unsplash`,
       }),
     })
       .then((response) => response.json())
@@ -33,6 +38,10 @@ export default function Home() {
         downloadLink.href = `data:application/octet-stream;base64,${response.image}`;
         downloadLink.download = "teste.png";
         downloadLink.click();
+        setLoadingDownload(false);
+      })
+      .catch((error) => {
+        setLoadingDownload(false);
       });
   };
 
@@ -73,7 +82,9 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={handleDownload}
-                  className="button is-success"
+                  className={classnames("button is-success", {
+                    "is-loading": loadingDownload,
+                  })}
                 >
                   <span className="icon">
                     <Download />
