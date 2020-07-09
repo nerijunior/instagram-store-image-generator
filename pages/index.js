@@ -1,14 +1,39 @@
 import React from "react";
 import Head from "next/head";
+import { SliderPicker, GithubPicker } from "react-color";
+import { ArrowLeftCircle, Download } from "react-feather";
 
 import { Preview } from "../components/Preview";
 import { SelectImagePhase } from "../components/SelectImagePhase";
 
 export default function Home() {
   const [selectedImage, setSelectedImage] = React.useState(null);
+  const [selectedColor, setSelectedColor] = React.useState("");
 
   const handleSelectImage = (image) => () => {
     setSelectedImage(image);
+    setSelectedColor(image.color);
+  };
+
+  const handleColorChange = (e) => {
+    setSelectedColor(e.hex);
+  };
+
+  const handleDownload = () => {
+    fetch("/api/process", {
+      method: "POST",
+      body: JSON.stringify({
+        imageUrl: selectedImage.urls.regular,
+        color: selectedColor,
+      }),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        const downloadLink = document.createElement("a");
+        downloadLink.href = `data:application/octet-stream;base64,${response.image}`;
+        downloadLink.download = "teste.png";
+        downloadLink.click();
+      });
   };
 
   return (
@@ -39,18 +64,60 @@ export default function Home() {
                   onClick={() => setSelectedImage(null)}
                   className="button is-info"
                 >
-                  Escolher outra imagem
+                  <span className="icon">
+                    <ArrowLeftCircle />
+                  </span>
+                  <span>Escolher outra imagem</span>
                 </button>
 
-                <a href="#preview" className="button is-success">
-                  Centralizar
-                </a>
+                <button
+                  type="button"
+                  onClick={handleDownload}
+                  className="button is-success"
+                >
+                  <span className="icon">
+                    <Download />
+                  </span>
+                  <span>Baixar</span>
+                </button>
               </div>
+
+              <SliderPicker
+                color={selectedColor}
+                onChangeComplete={handleColorChange}
+              />
+
+              <br />
+
+              <GithubPicker
+                color={selectedColor}
+                triangle="hide"
+                colors={[
+                  "#000",
+                  "#fff",
+                  "#FF6900",
+                  "#FCB900",
+                  "#7BDCB5",
+                  "#00D084",
+                  "#8ED1FC",
+                  "#0693E3",
+                  "#ABB8C3",
+                  "#EB144C",
+                  "#F78DA7",
+                  "#9900EF",
+                ]}
+                onChangeComplete={handleColorChange}
+              />
             </>
           )}
         </section>
 
-        {selectedImage && <Preview image={selectedImage} />}
+        {selectedImage && (
+          <>
+            <p>Como vai ficar</p>
+            <Preview image={selectedImage} backgroundColor={selectedColor} />
+          </>
+        )}
       </div>
 
       <footer className="footer">

@@ -13,8 +13,11 @@
     "next": "9.3.5",
     "node-fetch": "^2.6.0",
     "react": "16.13.1",
+    "react-color": "^2.18.1",
     "react-dom": "16.13.1",
+    "react-feather": "^2.0.8",
     "sass": "^1.26.10",
+    "sharp": "^0.25.4",
     "unsplash-js": "^6.0.0"
   }
 }
