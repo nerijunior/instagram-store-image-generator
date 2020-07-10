@@ -133,9 +133,9 @@ export default function Home() {
       </div>
 
       <footer className="footer">
-        Feito por: <a href="nerijunior.com">Neri Junior</a> - Usando{" "}
-        <a href="https://nextjs.org/">Next.Js</a> e{" "}
-        <a href="https://unsplash.com/">Unsplash</a>
+        Feito por: <a href="https://nerijunior.com" target="_blank">Neri Junior</a> - Usando{" "}
+        <a href="https://nextjs.org/" target="_blank">Next.Js</a> e{" "}
+        <a href="https://unsplash.com/" target="_blank">Unsplash</a>
       </footer>
     </div>
   );
